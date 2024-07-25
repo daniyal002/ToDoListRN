@@ -1,21 +1,16 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import ModalTask from "@/components/ModalTask/ModalTask";
 import Task from "@/components/Task/Task";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useToDoListStore } from "@/store/toDoListStore";
 
-export default function HomeScreen() {
+export default function CompletedScreen() {
   const toDoList = useToDoListStore((state) => state.toDoList);
   const [modalVisible, setModalVisible] = useState(false);
   const [taskId, setTaskId] = useState<number>();
   const [modalType, setModalType] = useState<"create" | "edit">("create");
-
-  const newTask = () => {
-    setModalType("create");
-    setModalVisible(true);
-  };
 
   const editTask = (id: number) => {
     setModalType("edit");
@@ -35,22 +30,17 @@ export default function HomeScreen() {
         id={taskId}
         type={modalType}
       />
-      <ThemedText style={styles.headerText} lightColor="#333" darkColor="#fff">
-        Мой Список Задач
-      </ThemedText>
+      <ThemedText style={styles.headerText}>Завершенные задачи</ThemedText>
       <ScrollView contentContainerStyle={styles.scrollView}>
         {toDoList
           .toReversed()
           .map(
             (task) =>
-              !task.done && (
+              task.done && (
                 <Task task={task} editTask={editTask} key={task.id} />
               )
           )}
       </ScrollView>
-      <Pressable style={[styles.button, styles.buttonOpen]} onPress={newTask}>
-        <Text style={styles.textStyle}>Добавить задачу</Text>
-      </Pressable>
     </ThemedView>
   );
 }
@@ -65,6 +55,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: "bold",
+    // color: '#333',
     textAlign: "center",
     marginBottom: 20,
   },

@@ -17,9 +17,18 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Главная',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="completed"
+        options={{
+          title: 'Завершенные',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'checkbox' : 'checkbox-outline'} color={color} />
           ),
         }}
       />
